@@ -1,0 +1,110 @@
+---
+title: "Integrating Stripe Payments with Next.js: A Step-by-Step Guide in MDX"
+summary: "Are you a Next.js developer looking to accept payments on your website? Stripe is a popular and trusted payment processing platform that can seamlessly integrate with your Next.js application. In this blog post, we'll walk you through the process of integrating Stripe Payments with Next.js using MDX, a fantastic tool for creating interactive and dynamic documentation."
+publishDate: "2023-10-27"
+---
+
+> Are you a Next.js developer looking to accept payments on your website? Stripe is a popular and trusted payment processing platform that can seamlessly integrate with your Next.js application. In this blog post, we'll walk you through the process of integrating Stripe Payments with Next.js using MDX, a fantastic tool for creating interactive and dynamic documentation.
+
+## What is Next.js?
+
+Next.js is a powerful and versatile framework for building server-side rendered React applications. Its server-side rendering capabilities, combined with other features like automatic code splitting and static site generation, make it an excellent choice for building high-performance web applications.
+
+## What is MDX?
+
+MDX is a file format that combines Markdown with JSX (JavaScript XML), allowing you to write interactive and dynamic content using React components within your Markdown documents. It's perfect for creating documentation with live code examples, embedded components, and more.
+
+## Why Stripe?
+
+Stripe is one of the most widely used and developer-friendly payment processing platforms. It offers a robust set of APIs and tools to handle payment transactions, manage subscriptions, and more. With Stripe, you can accept payments from customers all over the world and provide a smooth and secure checkout experience.
+
+<Image
+  src="/images/stripe-payments.png"
+  alt="Stripe payments"
+  width="800"
+  height="400"
+/>
+## Prerequisites
+
+Before we dive into the integration process, **make sure you have the following set up**:
+
+- Node.js and npm installed on your system.
+- A Next.js project set up. If you don't have one yet, create a new Next.js app using `create-next-app.`
+
+### Step 1: Sign up for a Stripe Account
+
+If you haven't already, head over to Stripe's website and sign up for an account. Once you have your account ready, log in to the Stripe Dashboard, where you'll find essential API keys that we'll need later in the integration process.
+
+### Step 2: Install Stripe Dependencies
+
+In your Next.js project directory, open a terminal and install the Stripe dependencies:
+
+```bash
+npm install @stripe/stripe-js @stripe/react-stripe-js
+```
+
+### Step 3: Set Up Environment Variables
+
+Next, create a .env.local file in the root of your project and add your Stripe API keys:
+You can find your Stripe API keys in the Stripe Dashboard under [Developers > API Keys](https://dashboard.stripe.com/test/apikeys).
+
+```bash
+NEXT_PUBLIC_STRIPE_PUBLIC_KEY=your_stripe_public_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+```
+
+Remember to replace your_stripe_public_key and your_stripe_secret_key with your actual Stripe API keys.
+
+### Step 4: Create the Stripe Component
+
+In your components directory, create a new file called StripeCheckout.js. This component will handle the payment integration with Stripe. Here's a basic example of how it might look:
+
+```jsx title="pages/checkout.tsx" {2, 6-8}
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+
+const StripeCheckout = ({ children }) => {
+  return <Elements stripe={stripePromise}>{children}</Elements>;
+};
+
+export default StripeCheckout;
+```
+
+### Step 5: Implement the Payment Form
+
+In your MDX file (e.g., payment.mdx), import the StripeCheckout component and create a payment form:
+
+```mdx
+import StripeCheckout from "../components/StripeCheckout";
+```
+
+## Checkout Page
+
+To complete your purchase, enter your payment details below:
+
+```js
+<StripeCheckout>
+  <YourPaymentFormComponent />
+</StripeCheckout>
+```
+
+Replace `<YourPaymentFormComponent />` with the actual payment form you want to display
+to users.
+
+### Step 6: Handle the Payment Submission
+
+In your Next.js API route (e.g., /api/payment), you'll handle the payment submission and interaction with the Stripe API. This API route should be called when the user submits the payment form.
+
+For simplicity, we won't provide a complete API implementation here, as it can vary based on your specific use case. However, you can find detailed guidance on handling payments with Next.js and Stripe in the official Stripe documentation.
+
+### Step 7: Test the Integration
+
+Now that everything is set up, start your Next.js development server and navigate to the payment page you created. You should see your payment form rendered on the page. Enter some test payment details and submit the form to test the integration with Stripe.
+
+Congratulations! You've successfully integrated Stripe Payments with Next.js using MDX. Your application is now ready to accept payments securely and efficiently.
+
+Remember, this tutorial only scratched the surface of what you can do with Stripe and Next.js. Feel free to explore Stripe's API documentation for additional features like handling subscriptions, webhook events, and more.
+
+Happy coding!
