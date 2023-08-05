@@ -28,6 +28,7 @@ export default function Mdx({ code }: MdxProps) {
   const Component = useMDXComponent(code);
   return (
     <div className="prose prose-pink">
+      {/* @ts-ignore */}
       <Component components={components} />
     </div>
   );
